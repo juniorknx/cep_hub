@@ -164,17 +164,16 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://postgres:postgres@localhost:5432/cephubdb?schema=public"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Cep {\n  id          Int     @id @default(autoincrement())\n  cep         String  @unique\n  logradouro  String\n  complemento String?\n  bairro      String\n  localidade  String\n  uf          String\n  ibge        String?\n  gia         String?\n  ddd         String?\n  siafi       String?\n}\n",
-  "inlineSchemaHash": "d3ffb16b2a17619c90cf3f947a08f0d4ffa5a078c5d6bf3ddc50dae17adcdaf0",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Cep {\n  id          Int     @id @default(autoincrement())\n  cep         String  @unique\n  logradouro  String\n  complemento String?\n  bairro      String\n  localidade  String\n  uf          String\n  ibge        String?\n  gia         String?\n  ddd         String?\n  siafi       String?\n}\n",
+  "inlineSchemaHash": "47abb2e8f12a247770bc6a07fe214b06f082ee07f8b9f3e56568c1c6312ee113",
   "copyEngine": true
 }
 config.dirname = '/'
