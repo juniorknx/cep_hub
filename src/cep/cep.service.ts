@@ -9,9 +9,6 @@ export class CepService {
 
     async findOne(cep: string) {
         const cepNumber = validateCep(cep)
-        console.log(cepNumber)
-        console.log(process.env.VIACEP_API)
-
         const localCep = await this.prisma.cep.findUnique({
             where: {
                 cep: cepNumber,
