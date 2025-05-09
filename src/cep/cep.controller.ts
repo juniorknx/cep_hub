@@ -5,8 +5,13 @@ import { CepService } from './cep.service';
 export class CepController {
     constructor(private readonly cepService: CepService) { }
 
-    @Get('busca/cep/:cep')
+    @Get(':cep')
     async getCep(@Param('cep') cep: string) {
         return this.cepService.findOne(cep);
+    }
+
+    @Get()
+    findAll() {
+        return this.cepService.findAll();
     }
 }

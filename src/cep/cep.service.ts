@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { validateCep } from './utils/validatecep';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import axios from 'axios';
 @Injectable()
 export class CepService {
     constructor(private readonly prisma: PrismaService) { }
+    private readonly logger = new Logger(CepService.name);
 
     async findOne(cep: string) {
         const cepNumber = validateCep(cep)
@@ -16,7 +17,7 @@ export class CepService {
         })
 
         if (localCep) {
-            console.log(`[LOCAL] CEP ${cepNumber} encontrado na base de dados.`);
+            this.logger.log(`[LOCAL] CEP ${cepNumber} encontrado na base de dados.`);
             return localCep;
         }
 
@@ -43,10 +44,13 @@ export class CepService {
             }
         });
 
-        console.log(
-            `[SALVO] CEP ${cepNumber} salvo na base de dados após consulta externa.`,
-        );
+        this.logger.log(`[SALVO] CEP ${cepNumber} salvo na base de dados após consulta externa.`)
 
         return newCep;
+    }
+
+    async findAll() {
+        const cep = this.prisma.cep.findMany()
+        return cep;
     }
 }
